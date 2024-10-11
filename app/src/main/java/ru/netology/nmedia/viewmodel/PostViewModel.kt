@@ -83,6 +83,19 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun refresh() {
+        _data.value = _data.value?.copy(refreshing = true, loading = false, error = false)
+        repository.getAll(object : PostRepository.GetAllCallback {
+            override fun onSuccess(posts: List<Post>) {
+                _data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
+            }
+
+            override fun onError(e: Exception) {
+                _data.postValue(_data.value?.copy(error = true, refreshing = false))
+            }
+        })
+    }
+
     fun removeById(id: Long) {
         val old = _data.value?.posts.orEmpty()
         repository.removeById(id, object : PostRepository.RemoveCallback {

@@ -4,6 +4,19 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
+
+android.applicationVariants.all { variant ->
+    def schemaDir = file("$projectDir/schemas")
+    schemaDir.mkdirs()
+}
     namespace "ru.netology.nmedia"
 
     compileSdkVersion 34
