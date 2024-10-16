@@ -2,9 +2,8 @@ package ru.netology.handler
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.handler.load
 
 class MainActivity : AppCompatActivity() {
     private val urls = listOf("netology.jpg", "sber.jpg", "tcs.jpg", "404.png")
@@ -21,13 +20,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             val url = "http://10.0.2.2:9999/avatars/${urls[index++]}"
-            Glide.with(binding.image)
-                .load(url)
-                .placeholder(R.drawable.ic_loading_100dp)
-                .error(R.drawable.ic_error_100dp)
-                .timeout(10_000)
-                .into(binding.image)
-
+            binding.image.load(url)
         }
     }
 }
