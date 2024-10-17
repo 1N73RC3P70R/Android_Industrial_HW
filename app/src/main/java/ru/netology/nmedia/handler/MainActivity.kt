@@ -2,8 +2,14 @@ package ru.netology.handler
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
+import com.bumptech.glide.load.model.GlideUrl
+import okhttp3.OkHttpClient
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.handler.loadAvatar
+import java.io.InputStream
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private val avatars = listOf("netology.jpg", "sber.jpg", "tcs.jpg", "404.png")
@@ -13,6 +19,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val okHttpClient = OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .build()
+
+        Glide.get(this).registry.replace(
+            GlideUrl::class.java,
+            InputStream::class.java,
+            OkHttpUrlLoader.Factory(okHttpClient)
+        )
 
         loadNextAvatar(binding)
 
