@@ -74,16 +74,16 @@ class FeedFragment : Fragment() {
             binding.swipeRefresh.isRefreshing = state.refreshing
         }
 
-            binding.retryButton.setOnClickListener {
-                viewModel.loadPosts()
-            }
+        binding.retryButton.setOnClickListener {
+            viewModel.loadPosts()
+        }
 
-            binding.fab.setOnClickListener {
-                findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
-            }
-            binding.swipeRefresh.setOnRefreshListener{
-                viewModel.refresh()
-            }
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+        }
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.refresh()
+        }
         return binding.root
     }
 }

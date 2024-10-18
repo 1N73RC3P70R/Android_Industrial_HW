@@ -1,7 +1,6 @@
 package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
@@ -78,20 +77,6 @@ class PostViewHolder(
 
             share.setOnClickListener {
                 onInteractionListener.onShare(post)
-            }
-
-            post.attachment?.let { attachment ->
-                if (attachment.type == "IMAGE") {
-                    Glide.with(attachmentImage.context)
-                        .load("http://10.0.2.2:9999/images/${attachment.url}")
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(attachmentImage)
-                    attachmentImage.visibility = View.VISIBLE
-                } else {
-                    attachmentImage.visibility = View.GONE
-                }
-            } ?: run {
-                attachmentImage.visibility = View.GONE
             }
         }
     }
