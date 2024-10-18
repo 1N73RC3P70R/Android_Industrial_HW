@@ -11,8 +11,8 @@ import java.io.InputStream
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
-    private val avatars = listOf("netology.jpg", "sber.jpg", "tcs.jpg", "404.png")
-    private var currentAvatarIndex = 0
+//    private val avatars = listOf("netology.jpg", "sber.jpg", "tcs.jpg", "404.png")
+//    private var currentAvatarIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

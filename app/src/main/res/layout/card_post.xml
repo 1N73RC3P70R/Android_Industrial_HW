@@ -23,6 +23,16 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@sample/posts.json/data/authorAvatar" />
 
+        <ImageView
+            android:id="@+id/attachmentImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <TextView
             android:id="@+id/author"
             android:layout_width="0dp"

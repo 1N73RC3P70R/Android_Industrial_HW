@@ -1,11 +1,14 @@
 package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
@@ -41,9 +44,14 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            // в адаптере
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
+
+            Glide.with(avatar.context)
+                .load("http://10.0.2.2:9999/avatars/${post.authorAvatar}")
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .circleCrop()
+                .into(avatar)
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
@@ -58,7 +66,6 @@ class PostViewHolder(
                                 onInteractionListener.onEdit(post)
                                 true
                             }
-
                             else -> false
                         }
                     }
@@ -66,17 +73,29 @@ class PostViewHolder(
             }
 
             like.setOnClickListener {
-                like.isChecked = !like.isChecked
                 onInteractionListener.onLike(post)
             }
 
             share.setOnClickListener {
                 onInteractionListener.onShare(post)
             }
+
+            post.attachment?.let { attachment ->
+                if (attachment.type == "IMAGE") {
+                    Glide.with(attachmentImage.context)
+                        .load("http://10.0.2.2:9999/images/${attachment.url}")
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(attachmentImage)
+                    attachmentImage.visibility = View.VISIBLE
+                } else {
+                    attachmentImage.visibility = View.GONE
+                }
+            } ?: run {
+                attachmentImage.visibility = View.GONE
+            }
         }
     }
 }
-
 class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem.id == newItem.id
