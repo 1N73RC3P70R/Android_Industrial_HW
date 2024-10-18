@@ -47,6 +47,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         })
     }
 
+
     fun save() {
         edited.value?.let { post ->
             repository.save(post, object : PostRepository.PostCallback {
